@@ -6,17 +6,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import Storage from "./storage.js";
 import Router from "./router.js";
-import LoopSystem from "./loopsystem.js";
 
 const Auth = {
 
     currentUser: null,
+    onLoginSuccess: null,
 
     init(){
         onAuthStateChanged(auth, (user) => {
             if(user){
                 Auth.currentUser = user;
-                Auth.loadAndRedirect();
+                if(Auth.onLoginSuccess) Auth.onLoginSuccess(user);
             } else {
                 Router.show("login");
             }
@@ -56,16 +56,8 @@ const Auth = {
                 errorEl.textContent = "Email ou senha incorretos.";
             } else {
                 errorEl.textContent = "Erro ao entrar. Tente novamente.";
+                console.error(e);
             }
-        }
-    },
-
-    async loadAndRedirect(){
-        const plan = await Storage.loadPlan(Auth.currentUser.email);
-        if(plan){
-            LoopSystem.goDashboard(plan);
-        } else {
-            Router.show("home");
         }
     },
 
