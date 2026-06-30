@@ -4,8 +4,6 @@ import Dashboard from "./dashboard.js";
 import Result from "./result.js";
 import Gamification from "./gamification.js";
 import Wizard from "./wizard.js";
-import Storage from "./storage.js";
-import Auth from "./auth.js";
 
 const LoopSystem = {
 
@@ -26,16 +24,11 @@ const LoopSystem = {
             const id = e.target.id;
 
             if(id === "btnStart") Router.show("wizard");
-
             if(id === "btnNextStep") Wizard.next();
-
             if(id === "btnBackStep") Wizard.back();
-
             if(id === "btnRestart" || id === "btnNewPlan") this.goHome();
-
             if(id === "btnSeeResult") this.goResult();
-
-            if(id === "btnLogout") Auth.logout();
+            if(id === "btnLogout") import("./auth.js").then(m => m.default.logout());
         });
     },
 
@@ -52,9 +45,13 @@ const LoopSystem = {
         Router.show("dashboard");
         Dashboard.render(this.state.result, data);
 
-        if(Auth.currentUser){
-            await Storage.savePlan(Auth.currentUser.email, data);
-        }
+        import("./storage.js").then(m => {
+            import("./auth.js").then(a => {
+                if(a.default.currentUser){
+                    m.default.savePlan(a.default.currentUser.email, data);
+                }
+            });
+        });
 
         Gamification.addPoints(10);
     },
