@@ -1,0 +1,21 @@
+{
+  "name": "Organizador Financeiro de Viagem",
+  "short_name": "Org. Viagem",
+  "description": "Planeje sua viagem e descubra quanto precisa guardar.",
+  "start_url": "/organizador-viagem/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/2563EB/ffffff?text=V",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/2563EB/ffffff?text=V",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
