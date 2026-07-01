@@ -12,6 +12,7 @@ const Router = {
         wizard: document.getElementById("screen-wizard"),
         dashboard: document.getElementById("screen-dashboard"),
         pretrip: document.getElementById("screen-pretrip"),
+        register: document.getElementById("screen-register"),
         result: document.getElementById("screen-result")
     };
 },
