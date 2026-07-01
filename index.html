@@ -292,9 +292,68 @@
   <h3>📈 Evolução mensal</h3>
   <canvas id="chartDashboard"></canvas>
 </div>
+        <button id="btnPreTrip" class="btn btn-secondary w-100 mt-3">
+  📋 Custos pré-viagem
+</button>
         <button id="btnSeeResult" class="btn btn-primary w-100 mt-4">Ver resultado final</button>
       </div>
     </div>
+    <!-- PRE-VIAGEM -->
+<div id="screen-pretrip" class="screen">
+  <div class="dashboard">
+
+    <div class="hero">
+      <h2>Custos pré-viagem 📋</h2>
+      <p>Itens necessários antes de embarcar</p>
+    </div>
+
+    <!-- Itens sugeridos -->
+    <div class="goal-box">
+      <h3>Itens comuns</h3>
+      <div id="pretripSuggested"></div>
+    </div>
+
+    <!-- Itens personalizados -->
+    <div class="goal-box mt-3">
+      <h3>Adicionar item</h3>
+      <input id="pretripItemName" type="text" class="form-control" placeholder="Nome do item (ex: Adaptador de tomada)">
+      <input id="pretripItemValue" type="text" class="form-control mt-2" placeholder="Valor estimado">
+      <button id="btnAddPretripItem" class="btn btn-primary w-100 mt-3">
+        <i class="bi bi-plus-circle"></i> Adicionar
+      </button>
+    </div>
+
+    <!-- Lista personalizada -->
+    <div id="pretripCustomList" class="goal-box mt-3" style="display:none">
+      <h3>Seus itens</h3>
+      <div id="pretripCustomItems"></div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="goal-box mt-3">
+      <h3>Resumo de custos</h3>
+      <table style="width:100%">
+        <tr>
+          <td>Total pré-viagem</td>
+          <td id="pretripTotal" style="font-weight:600">R$ 0</td>
+        </tr>
+        <tr>
+          <td>Custo da viagem</td>
+          <td id="pretripTripCost" style="font-weight:600">R$ 0</td>
+        </tr>
+        <tr style="border-top:1px solid #E2E8F0">
+          <td><strong>Total geral</strong></td>
+          <td id="pretripGrandTotal" style="font-weight:700; color:#2563EB">R$ 0</td>
+        </tr>
+      </table>
+    </div>
+
+    <button id="btnBackDashboard" class="btn btn-secondary w-100 mt-3">
+      <i class="bi bi-arrow-left"></i> Voltar ao plano
+    </button>
+
+  </div>
+</div>
 
     <!-- RESULT -->
     <div id="screen-result" class="screen">
