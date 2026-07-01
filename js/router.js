@@ -5,15 +5,16 @@ const Router = {
     screens: {},
 
     init(){
-        this.screens = {
-            splash: document.getElementById("screen-splash"),
-            login: document.getElementById("screen-login"),
-            home: document.getElementById("screen-home"),
-            wizard: document.getElementById("screen-wizard"),
-            dashboard: document.getElementById("screen-dashboard"),
-            result: document.getElementById("screen-result")
-        };
-    },
+    this.screens = {
+        splash: document.getElementById("screen-splash"),
+        login: document.getElementById("screen-login"),
+        home: document.getElementById("screen-home"),
+        wizard: document.getElementById("screen-wizard"),
+        dashboard: document.getElementById("screen-dashboard"),
+        pretrip: document.getElementById("screen-pretrip"),
+        result: document.getElementById("screen-result")
+    };
+},
 
     show(name){
         const next = this.screens[name];
