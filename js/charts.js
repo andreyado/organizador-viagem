@@ -5,6 +5,7 @@ const Charts = {
 
     instances: {},
 
+    
     renderCircleProgress(element, percent){
         if(!element) return;
         const value = Math.max(0, Math.min(percent || 0, 100));
