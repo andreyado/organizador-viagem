@@ -1,17 +1,19 @@
 import Components from "./components.js";
+import Charts from "./charts.js";
 
 const Result = {
 
-    render(result){
+    render(result, data){
         if(!result) return;
-        this.header();
+        this.header(data);
         this.summary(result);
         this.plan(result);
         this.scenarios(result);
+        this.chart(result, data);
     },
 
-    header(){
-        Components.setText("resultDestination", "Sua Viagem");
+    header(data){
+        Components.setText("resultDestination", data ? data.destination || "Sua Viagem" : "Sua Viagem");
     },
 
     summary(result){
@@ -32,6 +34,10 @@ const Result = {
         Components.setCurrency("res6m", result.scenarios[6]);
         Components.setCurrency("res12m", result.scenarios[12]);
         Components.setCurrency("res24m", result.scenarios[24]);
+    },
+
+    chart(result, data){
+        Charts.renderEvolution("chartResult", data, result);
     }
 
 };
