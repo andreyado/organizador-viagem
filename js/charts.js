@@ -1,6 +1,9 @@
 import Utils from "./utils.js";
+import Calculator from "./calculator.js";
 
 const Charts = {
+
+    instances: {},
 
     renderCircleProgress(element, percent){
         if(!element) return;
@@ -34,8 +37,16 @@ const Charts = {
         };
 
         requestAnimationFrame(step);
-    }
+    },
 
-};
-
-export default Charts;
+    /**
+     * Calcula quantos meses até a data da viagem
+     */
+    monthsUntilTrip(dateStr){
+        if(!dateStr) return 12;
+        const today = new Date();
+        const tripDate = new Date(dateStr);
+        const diff = (tripDate.getFullYear() - today.getFullYear()) * 12
+            + (tripDate.getMonth() - today.getMonth());
+        return Math.max(1, Math.min(diff, 60));
+    },
