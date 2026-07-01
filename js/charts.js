@@ -50,3 +50,82 @@ const Charts = {
             + (tripDate.getMonth() - today.getMonth());
         return Math.max(1, Math.min(diff, 60));
     },
+
+    /**
+     * Renderiza gráfico de evolução mensal
+     */
+    renderEvolution(canvasId, data, result){
+        const canvas = document.getElementById(canvasId);
+        if(!canvas) return;
+
+        const months = this.monthsUntilTrip(data.date);
+        const history = Calculator.simulate(
+            result.cost,
+            result.saved,
+            result.scenarios[12],
+            months
+        );
+
+        const labels = history.map(h => `Mês ${h.month}`);
+        const values = history.map(h => h.value);
+
+        // Destroi instância anterior se existir
+        if(this.instances[canvasId]){
+            this.instances[canvasId].destroy();
+        }
+
+        this.instances[canvasId] = new Chart(canvas, {
+            type: "line",
+            data: {
+                labels,
+                datasets: [{
+                    label: "Valor acumulado",
+                    data: values,
+                    borderColor: "#2563EB",
+                    backgroundColor: "rgba(37,99,235,0.1)",
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointBackgroundColor: "#2563EB"
+                }, {
+                    label: "Meta",
+                    data: Array(months).fill(result.cost),
+                    borderColor: "#10B981",
+                    borderWidth: 2,
+                    borderDash: [6, 4],
+                    fill: false,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: { font: { family: "Poppins", size: 12 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => Utils.formatCurrency(ctx.raw)
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: (value) => Utils.formatCurrency(value),
+                            font: { family: "Poppins", size: 11 }
+                        }
+                    },
+                    x: {
+                        ticks: { font: { family: "Poppins", size: 11 } }
+                    }
+                }
+            }
+        });
+    }
+
+};
+
+export default Charts;
