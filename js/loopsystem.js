@@ -4,6 +4,7 @@ import Dashboard from "./dashboard.js";
 import Result from "./result.js";
 import Gamification from "./gamification.js";
 import Wizard from "./wizard.js";
+import PreTrip from "./pretrip.js";
 
 const LoopSystem = {
 
@@ -29,6 +30,7 @@ const LoopSystem = {
             if(id === "btnRestart" || id === "btnNewPlan") this.goHome();
             if(id === "btnSeeResult") this.goResult();
             if(id === "btnLogout") import("./auth.js").then(m => m.default.logout());
+            if(id === "btnPreTrip") this.goPreTrip();
         });
     },
 
@@ -57,8 +59,15 @@ const LoopSystem = {
     },
 
     goResult(){
-    Router.show("result");
-    Result.render(this.state.result, this.state.data);
+        Router.show("result");
+        Result.render(this.state.result, this.state.data);
+    },
+
+    goPreTrip(){
+        const tripCost = this.state.result ? this.state.result.cost : 0;
+        PreTrip.init(tripCost);
+        Router.show("pretrip");
+        PreTrip.renderCustom();
     }
 
 };
