@@ -1,5 +1,6 @@
 import Components from "./components.js";
 import Intelligence from "./intelligence.js";
+import Charts from "./charts.js";
 
 const Dashboard = {
 
@@ -10,6 +11,7 @@ const Dashboard = {
         this.progress(result);
         this.scenarios(result);
         this.insight(result, data);
+        this.chart(result, data);
     },
 
     header(data){
@@ -39,6 +41,10 @@ const Dashboard = {
             monthly: data.monthly || 0
         });
         Components.setText("insightText", text);
+    },
+
+    chart(result, data){
+        Charts.renderEvolution("chartDashboard", data, result);
     }
 
 };
