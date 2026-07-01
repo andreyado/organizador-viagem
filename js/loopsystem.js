@@ -57,8 +57,8 @@ const LoopSystem = {
     },
 
     goResult(){
-        Router.show("result");
-        Result.render(this.state.result);
+    Router.show("result");
+    Result.render(this.state.result, this.state.data);
     }
 
 };
