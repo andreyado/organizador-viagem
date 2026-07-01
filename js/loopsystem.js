@@ -5,6 +5,7 @@ import Result from "./result.js";
 import Gamification from "./gamification.js";
 import Wizard from "./wizard.js";
 import PreTrip from "./pretrip.js";
+import Register from "./register.js";
 
 const LoopSystem = {
 
@@ -31,6 +32,7 @@ const LoopSystem = {
             if(id === "btnSeeResult") this.goResult();
             if(id === "btnLogout") import("./auth.js").then(m => m.default.logout());
             if(id === "btnPreTrip") this.goPreTrip();
+            if(id === "btnRegister") this.goRegister();
         });
     },
 
@@ -47,6 +49,11 @@ const LoopSystem = {
         Router.show("dashboard");
         Dashboard.render(this.state.result, data);
 
+        Register.init();
+        Register.onSave = (record) => {
+            this.onNewRecord(record);
+        };
+
         import("./storage.js").then(m => {
             import("./auth.js").then(a => {
                 if(a.default.currentUser){
@@ -56,6 +63,23 @@ const LoopSystem = {
         });
 
         Gamification.addPoints(10);
+    },
+
+    onNewRecord(record){
+        if(!this.state.data) return;
+
+        this.state.data.saved = (this.state.data.saved || 0) + record.saved + record.extra;
+        this.state.result = Calculator.calculate(this.state.data);
+
+        Dashboard.render(this.state.result, this.state.data);
+
+        import("./storage.js").then(m => {
+            import("./auth.js").then(a => {
+                if(a.default.currentUser){
+                    m.default.savePlan(a.default.currentUser.email, this.state.data);
+                }
+            });
+        });
     },
 
     goResult(){
@@ -68,6 +92,10 @@ const LoopSystem = {
         PreTrip.init(tripCost);
         Router.show("pretrip");
         PreTrip.renderCustom();
+    },
+
+    goRegister(){
+        Router.show("register");
     }
 
 };
